@@ -1,0 +1,19 @@
+[package]
+name = "gdepper"
+version = "0.1.0"
+authors = ["Evan.Stoll <evan.stoll@rjginc.com>"]
+edition = "2018"
+
+[dependencies]
+log = "0.4.6"
+env_logger = "0.6.1"
+clap = { version = "2.32.0", features = [ "yaml" ] }
+tar = "0.4.22"
+flate2 = "1.0.7"
+failure = "0.1.5"
+nix = "0.13.0"
+pathdiff = "0.1.0"
+
+[profile.release]
+lto = "thin"
+opt-level = "z"

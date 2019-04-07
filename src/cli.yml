@@ -1,0 +1,29 @@
+name: gdepper
+version: "0.1"
+author: Evan Stoll <evanjsx@gmail.com>
+about: Archives Gentoo packages
+args:
+    - package:
+          short: p
+          long: package
+          value_name: PACKAGE
+          help: Sets the package to query
+          takes_value: true
+    - format:
+          short: f
+          long: format
+          value_name: FORMAT
+          help: Sets the archive format
+          takes_value: true
+    - destination:
+          short: d
+          long: destination
+          value_name: DESTINATION
+          help: Sets the destination for the archive
+          takes_value: true
+    - pretend:
+          short: n
+          long: pretend
+          value_name: PRETEND
+          help: Do a dry run
+          takes_value: false
