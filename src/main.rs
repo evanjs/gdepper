@@ -16,6 +16,10 @@ extern crate failure;
 use std::path::PathBuf;
 extern crate pathdiff;
 
+extern crate zstd;
+use zstd::stream::write::*;
+use zstd::stream::*;
+
 fn main() -> Result<(), failure::Error> {
     env_logger::init();
     let yaml = load_yaml!("cli.yml");
@@ -50,13 +54,14 @@ fn main() -> Result<(), failure::Error> {
     });
 
     let mut destination = std::path::Path::new(destination.as_str()).join(package);
-    destination.set_extension("tar.gz");
+    //destination.set_extension("tar.gz");
+    destination.set_extension("tar.zstd");
     trace!("{:#?}", &destination);
     let archive = std::fs::File::create(destination).expect("Failed to create output file");
 
 
-    let enc = GzEncoder::new(archive, Compression::default());
-
+    //let enc = GzEncoder::new(archive, Compression::default());
+    let enc = Encoder::new(archive, zstd::DEFAULT_COMPRESSION_LEVEL).unwrap().auto_finish();
     let mut builder = Builder::new(enc);
 
     let cur_dir = std::env::current_dir()?;
@@ -69,7 +74,8 @@ fn main() -> Result<(), failure::Error> {
 
     });
 
-    builder.into_inner()?.finish()?;
+    //builder.into_inner()?.finish()?;
+    builder.into_inner()?;
 
     Ok(())
 }
