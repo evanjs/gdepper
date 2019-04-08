@@ -90,10 +90,10 @@ fn main() -> Result<(), failure::Error> {
     let mut file = File::open(&destination)?;
     let mut buffer: Vec<u8> = Vec::new();
     file.read_to_end(&mut buffer)?;
-    let enc = encode(&mut buffer, compression, Quality::Default)?;
+    let enc = encode(&buffer, compression, Quality::Default)?;
 
     let mut writer = File::create(&destination)?;
-    writer.write(&*enc)?;
+    writer.write_all(&*enc)?;
     writer.flush()?;
 
     Ok(())
